@@ -2,6 +2,7 @@ import { Button, Sidebar, useSidebar } from "@cloudflare/kumo";
 import { ListIcon, SignOutIcon } from "@phosphor-icons/react";
 import type { Icon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
+import { useAuth } from "./auth.js";
 
 /** One sidebar nav entry. The consumer owns routing — `onClick` navigates. */
 export interface AppShellNavItem {
@@ -14,12 +15,13 @@ export interface AppShellNavItem {
 export interface AppShellProps {
   /** Brand element shown at the top of the sidebar (logo + name). */
   brand: ReactNode;
-  /** Sidebar nav entries (consumer-provided — kit knows nothing about routes/auth). */
+  /** Sidebar nav entries — routing is app-specific; visibility is the app's
+   *  call (filter by the Cedar perms on `useAuth().state.whoami` before passing). */
   nav: AppShellNavItem[];
   /** Label above the nav group. */
   navGroupLabel?: string;
-  /** Called when the user clicks sign-out (consumer owns auth/logout). */
-  onSignOut: () => void;
+  /** Called after the shared logout runs (e.g. redirect to /login). Optional. */
+  onSignedOut?: () => void;
   signOutLabel?: string;
   children: ReactNode;
 }
@@ -50,10 +52,16 @@ export function AppShell({
   brand,
   nav,
   navGroupLabel = "Workspace",
-  onSignOut,
+  onSignedOut,
   signOutLabel = "Sign out",
   children,
 }: AppShellProps): ReactNode {
+  // The ONE shared logout — couples the shell to the kit's auth, by design.
+  const { logout } = useAuth();
+  const handleSignOut = (): void => {
+    logout();
+    onSignedOut?.();
+  };
   return (
     <Sidebar.Provider defaultOpen>
       <div className="flex h-full w-full bg-kumo-base">
@@ -80,7 +88,7 @@ export function AppShell({
           </Sidebar.Content>
           <Sidebar.Footer>
             <Sidebar.Menu>
-              <Sidebar.MenuButton icon={SignOutIcon} onClick={onSignOut}>
+              <Sidebar.MenuButton icon={SignOutIcon} onClick={handleSignOut}>
                 {signOutLabel}
               </Sidebar.MenuButton>
             </Sidebar.Menu>
