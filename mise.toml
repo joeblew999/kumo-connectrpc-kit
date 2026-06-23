@@ -1,0 +1,33 @@
+# kumo-connectrpc-kit — the shared Kumo + ConnectRPC chrome, published to JSR.
+# Reusable across every ConnectRPC+Kumo project (stripe-connectrpc, the
+# multitenant example, …). Consumers: `pnpm add @joeblew999/kumo-connectrpc-kit`
+# (pnpm 10.9+ resolves JSR natively — no registry config).
+
+[tools]
+node = "22"
+"npm:pnpm" = "latest"
+
+[tasks."install"]
+description = "Install peer/dev deps (react, @cloudflare/kumo, @connectrpc/*)"
+run = "pnpm install"
+
+[tasks."typecheck"]
+description = "tsc --noEmit"
+depends = ["install"]
+run = "pnpm exec tsc --noEmit"
+
+# --- JSR publishing ---
+[tasks."jsr:check"]
+description = "JSR dry-run: ALL publish checks (slow-types, JSX, packaging) WITHOUT publishing"
+depends = ["install"]
+run = "pnpm dlx jsr publish --dry-run --allow-dirty"
+
+[tasks."jsr:publish"]
+description = "Publish to JSR. INTERACTIVE: needs GitHub auth + the @joeblew999 scope claimed on jsr.io"
+depends = ["install"]
+run = "pnpm dlx jsr publish"
+
+[tasks."jsr:publish-ci"]
+description = "Non-interactive publish (CI: set JSR via OIDC or a token). Allows dirty for local."
+depends = ["install"]
+run = "pnpm dlx jsr publish --allow-dirty"
