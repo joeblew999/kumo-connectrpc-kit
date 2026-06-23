@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { readHtmlTheme, setHtmlTheme, type Theme } from "./theme.ts";
+import { readHtmlTheme, setHtmlTheme, type Theme } from "./theme.js";
 
 /**
  * Dev theme A/B tool — mutates `<html data-theme>` live so you can verify
