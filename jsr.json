@@ -1,13 +1,9 @@
 {
   "name": "@joeblew999/kumo-connectrpc-kit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
-  "exports": "./src/index.ts",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
-  },
+  "exports": "./dist/index.js",
   "publish": {
-    "include": ["src", "jsr.json", "package.json", "README.md", "LICENSE"]
+    "include": ["dist", "jsr.json", "package.json", "README.md", "LICENSE"]
   }
 }
