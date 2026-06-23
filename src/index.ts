@@ -7,3 +7,4 @@ export { readHtmlTheme, setHtmlTheme, type Theme } from "./theme.js";
 export { PageLoading } from "./PageLoading.js";
 export { AuthHero } from "./AuthHero.js";
 export { ThemeToggle } from "./ThemeToggle.js";
+export { AppShell, type AppShellNavItem, type AppShellProps } from "./AppShell.js";

@@ -1,9 +1,15 @@
 {
   "name": "@joeblew999/kumo-connectrpc-kit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "exports": "./dist/index.js",
   "publish": {
-    "include": ["dist", "jsr.json", "package.json", "README.md", "LICENSE"]
+    "include": [
+      "dist",
+      "jsr.json",
+      "package.json",
+      "README.md",
+      "LICENSE"
+    ]
   }
 }
